@@ -13,13 +13,8 @@ export default class State extends declared(Accessor) {
   selectedTrailId: number = null;
   setSelectedTrailId(ID: number) {
     this.selectedTrailId = ID;
-    if (this.selectedTrailId && this.visiblePanel !== "detailPanel") {
-      this.visiblePanel = "detailPanel";
-    }
   }
 
-  @property()
-  visiblePanel: "selectionPanel" | "detailPanel" | "basemapPanel";
 
   @property()
   currentBasemapId: string = null;

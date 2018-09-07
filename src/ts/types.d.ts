@@ -6,7 +6,6 @@ export interface State extends Accessor {
   displayLoading: boolean;
   selectedTrailId: number;
   setSelectedTrailId: (id: number) => void;
-  visiblePanel: "selectionPanel" | "detailPanel" | "basemapPanel";
   currentBasemapId: string;
   view: SceneView;
   trails: Array<Trail>;

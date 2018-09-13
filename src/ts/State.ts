@@ -6,25 +6,24 @@ import { subclass, declared, property } from "esri/core/accessorSupport/decorato
 @subclass()
 export default class State extends declared(Accessor) {
 
-  @property()
-  displayLoading: boolean = true;
+    @property()
+    displayLoading: boolean = true;
 
-  @property()
-  selectedTrailId: number = null;
-  setSelectedTrailId(ID: number) {
-    this.selectedTrailId = ID;
-  }
+    @property()
+    selectedTrailId: string = null;
+    setSelectedTrailId(ID: string) {
+        this.selectedTrailId = ID;
+    }
 
+    @property()
+    currentBasemapId: string = null;
 
-  @property()
-  currentBasemapId: string = null;
+    @property()
+    view: SceneView = null;
 
-  @property()
-  view: SceneView = null;
+    @property()
+    trails: Array<Trail> = null;
 
-  @property()
-  trails: Array<Trail> = null;
-
-  @property()
-  online: boolean = true;
+    @property()
+    online: boolean = true;
 }

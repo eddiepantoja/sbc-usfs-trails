@@ -64,18 +64,13 @@ export function getLabelingInfo(options) {
 }
 
 export function createLabelClass(options) {
-    // Label color.
     const color = (options.selection) ? config.colors.selectedTrail : config.colors.defaultTrail;
-
-    // Expressions, symbols, scale ranges, label priorities, and label placement within layer.
     const labelClass = new LabelClass({
-        // Symbol used for rendering the label.
         symbol: new LabelSymbol3D({ // 3D Labels
             symbolLayers: [new TextSymbol3DLayer({ // 3D Labels
                 material: {
                     color: "white"
                 },
-                // halo surrounds the text.
                 halo: {
                     color: color,
                     size: 1
@@ -87,23 +82,20 @@ export function createLabelClass(options) {
                 size: 13
             })],
             verticalOffset: {
-                screenLength: 80, // The vertical symbol offset in points
+                screenLength: 150, // The vertical symbol offset in points
                 maxWorldLength: 2000, // maximum vertical offset
-                minWorldLength: 500 // minimum verticle offset
+                minWorldLength: 30 // minimum verticle offset
             },
-            // Line collout properties
             callout: {
                 type: "line",
-                size: 1,
+                size: .5,
                 color: "white",
                 border: {
                     color: color
                 }
             }
         }),
-        // The position of the label
         labelPlacement: "above-center",
-        // Uses name of trail as label
         labelExpressionInfo: {
             expression: `$feature.${config.data.trailAttributes.name}`
         }

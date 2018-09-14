@@ -65,10 +65,6 @@ export default class SceneElement {
             }
         });
 
-        // Updates basemmap when state changes.
-        state.watch("currentBasemapId", (id) => {
-            this.setCurrentBasemap(id);
-        });
     }
 
     // Creates SceneView with widgets.
@@ -148,22 +144,6 @@ export default class SceneElement {
         });
     }
 
-    // Set Basemap
-    private setCurrentBasemap(id) {
-        const basemapGroup = <GroupLayer> this.view.map.layers.filter((layer) => {
-            return (layer.title === "Basemap");
-        }).getItemAt(0);
-
-        const activateLayer = basemapGroup.layers.filter((layer) => {
-            if (layer.id === id) {
-                return true;
-            }
-            return false;
-        }).getItemAt(0);
-
-        activateLayer.visible = true;
-    }
-
     // On Click functionality
     private onViewClick(event) {
         // check if the user is online
@@ -224,7 +204,7 @@ export default class SceneElement {
         renderer.uniqueValueInfos = [];
         this.trailsLayer.renderer = renderer;
 
-        // this.trailsLayer.labelingInfo = getLabelingInfo({ selection: null });
+        this.trailsLayer.labelingInfo = getLabelingInfo({ selection: null });
 
         const selectedTrail = this.state.trails.filter((trail) => {
             return (trail.id === oldId);

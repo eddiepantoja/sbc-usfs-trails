@@ -1,24 +1,58 @@
 html,
 body,
 #scenePanel {
-	padding: 0;
-	margin: 0;
-	height: 100%;
-	width: 100%;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
 }
 
 #scenePanel {
-	height: calc(100vh);
+  height: calc(100vh);
 }
 
 #sidePanel {
-	z-index: 99;
-	position: absolute;
-	top: 0;
-	right: 0;
-	height: 100%;
-	background: rgba(0, 0, 0, 0.5);
-	width: 300px;
+  z-index: 99;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  width: 300px;
 }
 
 /******** Esri popups *************/
+
+.esri-popup__header-buttons,
+.esri-popup__feature-buttons {
+  display: none;
+}
+
+.esri-popup__header-title.esri-popup__header-title--button {
+  padding: 6px;
+}
+
+.esri-popup__header {
+  border-radius: 10px;
+}
+
+.esri-popup__main-container.esri-widget {
+  width: 70px;
+  text-align: center;
+  background: rgb(249, 163, 82);
+  border-radius: 3px;
+  color: white;
+}
+
+.esri-popup__header > h1 {
+  font-size: 1em;
+}
+
+.esri-popup__pointer-direction.esri-popup--shadow {
+  background: rgb(249, 163, 82);
+}
+
+.esri-popup--feature-updated {
+  transition: none;
+  opacity: 1;
+}

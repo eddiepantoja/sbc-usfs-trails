@@ -182,13 +182,11 @@ export default class SceneElement {
 
   // Update selected trail
   private selectFeature(featureId): void {
-    console.log("Selecting trail: " + featureId);
-
     const renderer = (<UniqueValueRenderer>this.trailsLayer.renderer).clone();
     renderer.uniqueValueInfos = getUniqueValueInfos({ selection: featureId });
     this.trailsLayer.renderer = renderer;
 
-    this.trailsLayer.labelingInfo = getLabelingInfo({ selection: featureId });
+    // this.trailsLayer.labelingInfo = getLabelingInfo({ selection: featureId });
 
     const selectedTrail = this.state.trails.filter(trail => {
       return trail.id === featureId;
@@ -202,12 +200,11 @@ export default class SceneElement {
 
   // Remove preivously selected feature
   private unselectFeature(oldId): void {
-    console.log("removing trail: " + oldId);
     const renderer = (<UniqueValueRenderer>this.trailsLayer.renderer).clone();
     renderer.uniqueValueInfos = [];
     this.trailsLayer.renderer = renderer;
 
-    this.trailsLayer.labelingInfo = getLabelingInfo({ selection: null });
+    // this.trailsLayer.labelingInfo = getLabelingInfo({ selection: null });
 
     const selectedTrail = this.state.trails.filter(trail => {
       return trail.id === oldId;

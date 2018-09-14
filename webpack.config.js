@@ -58,7 +58,7 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js', '.json'],
   },
-  devtool: 'eval-source-map',
+  devtool: 'source-map',
   plugins: [
     new ServiceWorkerWebpackPlugin({
       entry: path.join(__dirname, 'src/ts/sw.ts'),

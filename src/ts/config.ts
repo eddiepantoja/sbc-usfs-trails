@@ -3,7 +3,7 @@ export default {
         websceneItemId: "55a58b5d8a3048309def0db95a8a0571"
     },
     data: {
-        trailsServiceUrl: "http://services.arcgis.com/aA3snZwJfFkVyDuP/arcgis/rest/services/Vision2BActive_USFS_Trails/FeatureServer/0",
+        trailsServiceUrl: "http://services.arcgis.com/aA3snZwJfFkVyDuP/ArcGIS/rest/services/Vision2BActive_USFS_Trails/FeatureServer/0",
         trailAttributes: {
             name: "NAME",
             id: "ID",

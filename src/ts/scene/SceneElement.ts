@@ -56,6 +56,7 @@ export default class SceneElement {
         this.view.on("click", event => {
             // Event on click
             this.onViewClick(event);
+            this.trailsLayer;
         });
 
         // NOT SURE WHAT THIS IS DONG. DO MORE REASERCH
@@ -104,6 +105,9 @@ export default class SceneElement {
             ui: {
                 components: ["attribution"]
             },
+            highlightOptions: {
+                color: [255, 255, 0, 0],
+            },
             padding: {
                 right: 300
             }
@@ -140,7 +144,7 @@ export default class SceneElement {
                 mode: "on-the-ground"
             },
             labelsVisible: true,
-            popupEnabled: false,
+            popupEnabled: true,
             labelingInfo: getLabelingInfo({ selection: null })
         });
     }

@@ -78,7 +78,7 @@ export default class SceneElement {
     private initView() {
         const map = new Map({
             basemap: "satellite",
-            ground: "world-elevation",
+            ground: "world-elevation"
         });
 
         const view = new SceneView({
@@ -177,8 +177,8 @@ export default class SceneElement {
                             });
                             this.view.popup.content =
                                     "Trail Class: " + results.features[0].attributes[config.data.trailAttributes.trail_class] + "<br />" +
-                                    "Distance: " + parseFloat(results.features[0].attributes[config.data.trailAttributes.length_miles].toFixed(2)).toLocaleString('en') + " mi<br />" +
-                                    "Steps: " + parseFloat(results.features[0].attributes[config.data.trailAttributes.steps_to_travel].toFixed(2)).toLocaleString('en') + "<br />" +
+                                    "Distance: " + parseFloat(results.features[0].attributes[config.data.trailAttributes.length_miles].toFixed(2)).toLocaleString("en") + " mi<br />" +
+                                    "Steps: " + parseFloat(results.features[0].attributes[config.data.trailAttributes.steps_to_travel].toFixed(2)).toLocaleString("en") + "<br />" +
                                     "<button id='addTrail' trail-id='" + results.features[0].attributes[config.data.trailAttributes.id] + "'>Add Trail to Sidebar</button>";
                         } else {
                             this.state.setSelectedTrailId(null);

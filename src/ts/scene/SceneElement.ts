@@ -218,7 +218,4 @@ export default class SceneElement {
             return trail.id === oldId;
         })[0];
     }
-
-    // Create Popup
-
 }

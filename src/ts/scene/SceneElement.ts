@@ -15,6 +15,7 @@ import * as all from "dojo/promise/all";
 
 // Esri dependecies
 import * as WebScene from "esri/WebScene";
+import * as Map from "esri/Map";
 import * as SceneView from "esri/views/SceneView";
 import * as FeatureLayer from "esri/layers/FeatureLayer";
 import * as Query from "esri/tasks/support/Query";
@@ -75,15 +76,16 @@ export default class SceneElement {
 
     // Creates SceneView with widgets.
     private initView() {
-        const webscene = new WebScene({
-            portalItem: {
-                id: config.scene.websceneItemId
-            }
+        const map = new Map({
+            basemap: "satellite",
+            ground: "world-elevation",
         });
 
         const view = new SceneView({
             container: "scenePanel",
-            map: webscene,
+            map: map,
+            center: [-116.9772, 33.9295],
+            zoom: 10,
             constraints: {
                 tilt: {
                     max: 80,
@@ -104,9 +106,6 @@ export default class SceneElement {
             },
             ui: {
                 components: ["attribution"]
-            },
-            highlightOptions: {
-                color: [255, 255, 0, 0],
             },
             padding: {
                 right: 300

@@ -6,12 +6,11 @@ import * as WebScene from "esri/WebScene";
 
 import "../../style/side-panel.scss";
 
-export default class MenuPanel {
+export default class SidePanel {
   state: State;
   container: HTMLElement;
 
   constructor(state: State) {
-
     const trails = state.trails;
     this.state = state;
     this.container = <HTMLElement> document.querySelector(".sidePanel");

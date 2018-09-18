@@ -29,4 +29,7 @@ export default class State extends declared(Accessor) {
 
     @property()
     online: boolean = true;
+
+    @property()
+    trailCart: Array<Trail> = null;
 }

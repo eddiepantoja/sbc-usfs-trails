@@ -180,6 +180,10 @@ export default class SceneElement {
                                     "Distance: " + parseFloat(results.features[0].attributes[config.data.trailAttributes.length_miles].toFixed(2)).toLocaleString("en") + " mi<br />" +
                                     "Steps: " + parseFloat(results.features[0].attributes[config.data.trailAttributes.steps_to_travel].toFixed(2)).toLocaleString("en") + "<br />" +
                                     "<button id='addTrail' trail-id='" + results.features[0].attributes[config.data.trailAttributes.id] + "'>Add Trail to Sidebar</button>";
+
+                            on(dom.byId("addTrail"), "click", function(){
+                                console.log("button clicked!");
+                            });
                         } else {
                             this.state.setSelectedTrailId(null);
                         }
@@ -218,4 +222,12 @@ export default class SceneElement {
             return trail.id === oldId;
         })[0];
     }
+
+    // Add Trail to Cart
+    private addTrailCart(featureId): void {
+        // state.trails = result.features.map((feature) => {
+        //     return new Trail(feature, state);
+        // });
+    }
+
 }

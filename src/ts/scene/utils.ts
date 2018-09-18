@@ -71,7 +71,7 @@ export function createLabelClass(options) {
             size: 1
           },
           font: {
-            family: "Open Sans Condensed",
+            family: "Arial, Helvetica, sans-serif",
             weight: "bold"
           },
           size: 13

@@ -110,6 +110,9 @@ export default class SceneElement {
             },
             padding: {
                 right: 300
+            },
+            popup: {
+                visible: false
             }
         });
 
@@ -144,8 +147,8 @@ export default class SceneElement {
                 mode: "on-the-ground"
             },
             labelsVisible: true,
-            popupEnabled: true,
-            labelingInfo: getLabelingInfo({ selection: null })
+            labelingInfo: getLabelingInfo({ selection: null }),
+            popupEnabled: false
         });
     }
 
@@ -154,6 +157,7 @@ export default class SceneElement {
         // check if the user is online
         if (this.state.online) {
             this.view.hitTest(event).then(response => {
+                this.view.popup.close();
                 const result = response.results[0];
                 const query = this.trailsLayer.createQuery();
                 query.geometry = result.mapPoint;
@@ -167,6 +171,16 @@ export default class SceneElement {
                             this.state.setSelectedTrailId(
                                 results.features[0].attributes[config.data.trailAttributes.id]
                             );
+                            this.view.popup.open({
+                                // Set the popup's title to the coordinates of the location
+                                title: "Trail: " + results.features[0].attributes[config.data.trailAttributes.name],
+                                location: event.mapPoint // Set the location of the popup to the clicked location
+                            });
+                            this.view.popup.content =
+                                    "Trail Class: " + results.features[0].attributes[config.data.trailAttributes.trail_class] + "<br />" +
+                                    "Distance: " + parseFloat(results.features[0].attributes[config.data.trailAttributes.length_miles].toFixed(2)).toLocaleString('en') + " mi<br />" +
+                                    "Steps: " + parseFloat(results.features[0].attributes[config.data.trailAttributes.steps_to_travel].toFixed(2)).toLocaleString('en') + "<br />" +
+                                    "<button id='addTrail' trail-id='" + results.features[0].attributes[config.data.trailAttributes.id] + "'>Add Trail to Sidebar</button>";
                         } else {
                             this.state.setSelectedTrailId(null);
                         }
@@ -205,4 +219,7 @@ export default class SceneElement {
             return trail.id === oldId;
         })[0];
     }
+
+    // Create Popup
+
 }

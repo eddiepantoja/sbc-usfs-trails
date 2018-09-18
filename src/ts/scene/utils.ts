@@ -27,7 +27,7 @@ function createTrailSymbol(options) {
     symbolLayers: [
       new LineSymbol3DLayer({
         material: {
-          color: color
+          color: color.path
         },
         size: size
       })
@@ -67,8 +67,8 @@ export function createLabelClass(options) {
             color: "white"
           },
           halo: {
-            color: color,
-            size: 1
+            color: color.halo,
+            size: 1.3
           },
           font: {
             family: "Arial, Helvetica, sans-serif",
@@ -87,7 +87,7 @@ export function createLabelClass(options) {
         size: 1,
         color: "white",
         border: {
-          color: color
+          color: color.halo
         }
       }
     }),

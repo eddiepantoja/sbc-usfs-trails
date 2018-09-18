@@ -13,7 +13,13 @@ export default {
         }
     },
     colors: {
-        defaultTrail: "#db5353",
-        selectedTrail: "#f9a352"
+        defaultTrail: {
+            path: "#FF0000",
+            halo: "#7D0000"
+        },
+        selectedTrail: {
+            path: "#FAA901",
+            halo: "#7A5100"
+        }
     }
 };

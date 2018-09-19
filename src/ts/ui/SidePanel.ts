@@ -4,6 +4,7 @@ import * as domConstruct from "dojo/dom-construct";
 import * as domClass from "dojo/dom-class";
 import config from "../config";
 import { State, Trail } from "../types";
+import trailCart from "../data/trailCart";
 import * as SceneView from "esri/views/SceneView";
 import * as WebScene from "esri/WebScene";
 
@@ -13,10 +14,6 @@ export default class SidePanel {
     trails: Array<Trail>;
     state: State;
     container: any;
-    detailName: any;
-    detailClass: any;
-    detailSteps: any;
-    detailLength: any;
 
     constructor(state: State) {
 
@@ -32,9 +29,10 @@ export default class SidePanel {
             if (id) {
                 const selectedTrail = this.trails.filter((trail) => { return trail.id === id; })[0];
                 this.displayInfo(selectedTrail);
+
+                // TODO: Add trails to trailCart
             }
         });
-
     }
 
     emptyDetails() {

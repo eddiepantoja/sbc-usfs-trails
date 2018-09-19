@@ -208,12 +208,4 @@ export default class SceneElement {
             return trail.id === oldId;
         })[0];
     }
-
-    // Add Trail to Cart
-    private addTrailCart(featureId): void {
-        // state.trails = result.features.map((feature) => {
-        //     return new Trail(feature, state);
-        // });
-    }
-
 }

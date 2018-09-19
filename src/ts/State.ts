@@ -19,6 +19,12 @@ export default class State extends declared(Accessor) {
     }
 
     @property()
+    trailRoute: Array<String> = [];
+    setSelectedTrailRoutes(ids: Array<String>) {
+        this.trailRoute = ids;
+    }
+
+    @property()
     currentBasemapId: string = null;
 
     @property()
@@ -29,7 +35,4 @@ export default class State extends declared(Accessor) {
 
     @property()
     online: boolean = true;
-
-    @property()
-    trailCart: Array<Trail> = null;
 }

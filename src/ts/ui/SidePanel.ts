@@ -2,10 +2,9 @@ import * as dom from "dojo/dom";
 import * as on from "dojo/on";
 import * as domConstruct from "dojo/dom-construct";
 import * as domClass from "dojo/dom-class";
-import * as array from "dojo/_base/array";
+
 import config from "../config";
 import { State, Trail } from "../types";
-import trailRoute from "../data/trailRoute";
 import * as SceneView from "esri/views/SceneView";
 import * as WebScene from "esri/WebScene";
 
@@ -14,14 +13,16 @@ import "../../style/side-panel.scss";
 export default class SidePanel {
     trails: Array<Trail>;
     state: State;
-    container: any;
+    detailsContainer: any;
+    routesContainer: any;
 
     constructor(state: State) {
 
         this.state = state;
         this.trails = state.trails;
 
-        this.container = dom.byId("detailPanel");
+        this.detailsContainer = dom.byId("detailPanel");
+        this.routesContainer = dom.byId("routesPanel");
 
         this.emptyDetails();
 
@@ -36,8 +37,9 @@ export default class SidePanel {
             }
         });
 
-        state.watch("trailRoute", (Trail) => {
-          console.log("Trail updated: " + Trail);
+        // TODO: Add Observable
+        state.watch("trailRoute", (trails) => {
+          this.displayRoutes(trails);
         });
 
     }
@@ -58,6 +60,7 @@ export default class SidePanel {
 
           if (!found) {
             trailRoute.push(selectedTrail);
+            state.trailRoute = null;
             state.trailRoute = trailRoute;
           }
         }
@@ -65,17 +68,16 @@ export default class SidePanel {
     }
 
     emptyDetails() {
-        domConstruct.empty(this.container);
-
+        domConstruct.empty(this.detailsContainer);
         this.displayAppInfo();
     }
 
     displayAppInfo() {
-        this.container.innerHTML = "<div class='detail-placeholder'>Select a hike in the map to see details.</div>";
+        this.detailsContainer.innerHTML = "<div class='detail-placeholder'>Select a hike in the map to see details.</div>";
     }
 
     displayInfo(trail: Trail): void {
-        this.container.innerHTML = `
+        this.detailsContainer.innerHTML = `
             <div class="detailContent">
                 <div id="detailTitle">${trail.name}</div>
                 <div id="detailClass"><b>Class: </b> ${trail.trail_class}</div>
@@ -87,6 +89,15 @@ export default class SidePanel {
     }
 
     displayRoutes(trails) {
-      console.log(trails);
+      let content = "";
+      trails.forEach(function(trail) {
+        content +=  `<div class="route" data-trailID="${trail.id}">`;
+          content +=  `<span class="routeTitle">${trail.name}</span>`;
+          content +=  `<span class="routeClass">${trail.trail_class}</span>`;
+          content +=  `<span class="routeSteps">${trail.steps_to_travel}</span>`;
+          content +=  `<span class="routeLength">${trail.length_miles}</span>`;
+        content +=  `</div>`;
+      });
+      this.routesContainer.innerHTML = content;
     }
 }

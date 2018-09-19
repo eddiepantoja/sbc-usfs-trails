@@ -19,10 +19,10 @@ export default class State extends declared(Accessor) {
     }
 
     @property()
-    trailRoute: Array<String> = [];
-    setSelectedTrailRoutes(ids: Array<String>) {
-        this.trailRoute = ids;
-    }
+    trailRoute: Array<Trail> = null;
+    // setSelectedTrailRoutes(ids: Array<String>) {
+    //     this.trailRoute = ids;
+    // }
 
     @property()
     currentBasemapId: string = null;

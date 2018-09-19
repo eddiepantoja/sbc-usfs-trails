@@ -7,7 +7,7 @@ import Trail from "./Trail";
 function queryTrails() {
     const query = new Query({
         outFields: ["*"],
-        where: "ID=2000.21",
+        where: "ID='2000.21'",
         returnGeometry: true,
         outSpatialReference: {
             wkid: 4326
@@ -21,11 +21,11 @@ function queryTrails() {
     return queryTask.execute(query);
 }
 
-const trailCart = {
+const trailRoute = {
 
     initTrails: (state) => {
         return queryTrails().then((result) => {
-            state.trailCart = result.features.map((feature) => {
+            state.trailRoute = result.features.map((feature) => {
                 return new Trail(feature, state);
             });
         })
@@ -36,4 +36,4 @@ const trailCart = {
 
 };
 
-export default trailCart;
+export default trailRoute;

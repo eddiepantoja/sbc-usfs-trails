@@ -32,24 +32,34 @@ export default class SidePanel {
               this.displayInfo(selectedTrail);
 
               // Add trails to trailRoute
-              this.addRouteEvent(this.state);
+              this.addRouteEvent(this.state, this.trails);
             }
         });
 
-        state.watch("trailRoute", (trailRoute) => {
-          console.log("trailRoute updated: " + trailRoute);
+        state.watch("trailRoute", (Trail) => {
+          console.log("Trail updated: " + Trail);
         });
 
     }
 
     // Add trail to Route
-    addRouteEvent(state) {
+    addRouteEvent(state, trails) {
       on(document.querySelector("#addRoute"), "click", (evt) => {
-        const addID = evt.target.dataset.trailid;
-        if ( array.indexOf(state.trailRoute, addID ) <= -1 ) {
-          const routeArray = state.trailRoute;
-          routeArray.push(addID);
-          state.setSelectedTrailRoutes(routeArray);
+        const trailID = evt.target.dataset.trailid;
+        const selectedTrail = trails.filter((trail) => { return trail.id === trailID; })[0];
+        const trailRoute = state.trailRoute;
+
+        if ( !trailRoute ) {
+          state.trailRoute = [selectedTrail];
+        } else {
+          const found = trailRoute.some( function(el) {
+            return el.id === trailID;
+          });
+
+          if (!found) {
+            trailRoute.push(selectedTrail);
+            state.trailRoute = trailRoute;
+          }
         }
       });
     }
@@ -74,5 +84,9 @@ export default class SidePanel {
                 <button id="addRoute" data-trailId="${trail.id}">Add to Route</button>
             </div>
         `;
+    }
+
+    displayRoutes(trails) {
+      console.log(trails);
     }
 }

@@ -170,20 +170,6 @@ export default class SceneElement {
                             this.state.setSelectedTrailId(
                                 results.features[0].attributes[config.data.trailAttributes.id]
                             );
-                            this.view.popup.open({
-                                // Set the popup's title to the coordinates of the location
-                                title: "Trail: " + results.features[0].attributes[config.data.trailAttributes.name],
-                                location: event.mapPoint // Set the location of the popup to the clicked location
-                            });
-                            this.view.popup.content =
-                                    "Trail Class: " + results.features[0].attributes[config.data.trailAttributes.trail_class] + "<br />" +
-                                    "Distance: " + parseFloat(results.features[0].attributes[config.data.trailAttributes.length_miles].toFixed(2)).toLocaleString("en") + " mi<br />" +
-                                    "Steps: " + parseFloat(results.features[0].attributes[config.data.trailAttributes.steps_to_travel].toFixed(2)).toLocaleString("en") + "<br />" +
-                                    "<button id='addTrail' trail-id='" + results.features[0].attributes[config.data.trailAttributes.id] + "'>Add Trail to Sidebar</button>";
-
-                            on(dom.byId("addTrail"), "click", function(){
-                                console.log("button clicked!");
-                            });
                         } else {
                             this.state.setSelectedTrailId(null);
                         }

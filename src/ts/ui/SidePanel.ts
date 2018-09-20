@@ -47,12 +47,13 @@ export default class SidePanel {
     // Add trail to Route
     addRouteEvent(state, trails) {
       on(document.querySelector("#addRoute"), "click", (evt) => {
+        console.log(state.trailRoute);
         const trailID = evt.target.dataset.trailid;
         const selectedTrail = trails.filter((trail) => { return trail.id === trailID; })[0];
         const trailRoute = state.trailRoute;
 
         if ( !trailRoute ) {
-          state.trailRoute = [selectedTrail];
+          state.setTrailRoutes([selectedTrail]);
         } else {
           const found = trailRoute.some( function(el) {
             return el.id === trailID;
@@ -60,8 +61,8 @@ export default class SidePanel {
 
           if (!found) {
             trailRoute.push(selectedTrail);
-            state.trailRoute = null;
-            state.trailRoute = trailRoute;
+            state.setTrailRoutes(trailRoute);
+            this.displayRoutes(state.trailRoute);
           }
         }
       });

@@ -2,6 +2,7 @@ import * as dom from "dojo/dom";
 import * as on from "dojo/on";
 import * as domConstruct from "dojo/dom-construct";
 import * as domClass from "dojo/dom-class";
+import * as query from "dojo/query";
 
 import config from "../config";
 import { State, Trail } from "../types";
@@ -42,12 +43,26 @@ export default class SidePanel {
           this.displayRoutes(trails);
         });
 
+        on(document.querySelector("#routesPanel"), '.removeTrail:click', function(evt) {
+          const trailid = evt.target.dataset.trailid;
+          const trailRoute = state.trailRoute;
+
+          if ( trailRoute ) {
+            for (const i in trailRoute) {
+              if (trailRoute[i].id === trailid) {
+                delete trailRoute[i];
+              }
+            }
+            state.trailRoute = trailRoute;
+          }
+          // TODO: Fix displayRoutes is undefined
+          // this.displayRoutes(state.trailRoute);
+        });
     }
 
     // Add trail to Route
     addRouteEvent(state, trails) {
       on(document.querySelector("#addRoute"), "click", (evt) => {
-        console.log(state.trailRoute);
         const trailID = evt.target.dataset.trailid;
         const selectedTrail = trails.filter((trail) => { return trail.id === trailID; })[0];
         const trailRoute = state.trailRoute;
@@ -93,10 +108,11 @@ export default class SidePanel {
       let content = "";
       trails.forEach(function(trail) {
         content +=  `<div class="route" data-trailID="${trail.id}">`;
-          content +=  `<span class="routeTitle">${trail.name}</span>`;
-          content +=  `<span class="routeClass">${trail.trail_class}</span>`;
-          content +=  `<span class="routeSteps">${trail.steps_to_travel}</span>`;
-          content +=  `<span class="routeLength">${trail.length_miles}</span>`;
+          content +=  `<span class="routeTitle">${trail.name}</span><br />`;
+          content +=  `<span class="routeClass">${trail.trail_class}</span><br />`;
+          content +=  `<span class="routeSteps">${trail.steps_to_travel}</span><br />`;
+          content +=  `<span class="routeLength">${trail.length_miles}</span><br />`;
+          content +=  `<button class="removeTrail" data-trailID="${trail.id}">Remove Trail</button>`;
         content +=  `</div>`;
       });
       this.routesContainer.innerHTML = content;

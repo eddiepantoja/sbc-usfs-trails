@@ -11,6 +11,7 @@ export interface State extends Accessor {
     trails: Array<Trail>;
     online: boolean;
     trailRoute: Array<Trail>;
+    setTrailRoutes: (value: Array<Trail>) => void;
 }
 
 export interface Trail {

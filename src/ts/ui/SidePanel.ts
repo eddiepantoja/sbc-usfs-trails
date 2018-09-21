@@ -53,10 +53,9 @@ export default class SidePanel {
                 delete trailRoute[i];
               }
             }
-            state.trailRoute = trailRoute;
+            state.set("trailRoute", trailRoute);
+            query('[data-trailID|=\"' + trailid + '\"]').style("display", "none");
           }
-          // TODO: Fix displayRoutes is undefined
-          // this.displayRoutes(state.trailRoute);
         });
     }
 

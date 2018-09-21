@@ -9,6 +9,10 @@ import { State, Trail } from "../types";
 import * as SceneView from "esri/views/SceneView";
 import * as WebScene from "esri/WebScene";
 
+import {
+  getIntersectingTrails
+} from "./utils";
+
 import "../../style/side-panel.scss";
 
 export default class SidePanel {
@@ -40,7 +44,8 @@ export default class SidePanel {
 
         // Watches for changes in trailRoute and executes dispalyRoutes
         state.watch("trailRoute", (value) => {
-          this.displayRoutes(value);
+          // TODO: sort and do magic before routes are disalyed
+          this.displayRoutes(getIntersectingTrails(value));
         });
 
         on(document.querySelector("#routesPanel"), ".removeTrail:click", function(evt) {
@@ -107,10 +112,11 @@ export default class SidePanel {
     }
 
     // Updates Routes in Dom
-    displayRoutes(trails) {
+    displayRoutes(value) {
+      console.log(value.intersections);
       let content = "";
-      if (trails) {
-        trails.forEach(function(trail) {
+      if (value.trails) {
+        value.trails.forEach(function(trail) {
           content +=  `<div class="route" data-trailID="${trail.id}">`;
             content +=  `<span class="routeTitle">${trail.name}</span><br />`;
             content +=  `<span class="routeClass">${trail.trail_class}</span><br />`;

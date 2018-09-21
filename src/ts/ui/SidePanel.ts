@@ -67,8 +67,10 @@ export default class SidePanel {
         const trailRoute = state.trailRoute;
 
         if ( !trailRoute ) {
+          // Add trail to route.
           state.setTrailRoutes([selectedTrail]);
         } else {
+          // Check to see if trial in Route.
           const found = trailRoute.some( function(el) {
             return el.id === trailID;
           });

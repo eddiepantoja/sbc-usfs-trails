@@ -1,25 +1,35 @@
+import * as geometryEngine from "esri/geometry/geometryEngine";
+
 export function getIntersectingTrails(trails) {
-  const intersections = [];
+    const intersections = [];
 
-  // if (trails.length > 1) {
-  //   trails.forEach(function(trail, i) {
-  //     if (i !== (trails.length - 1) ) {
-  //       const comparision = findOne(trail.geometry.paths[0], trails[i + 1].geometry.paths[0]);
-  //       if (comparision) {
-  //         intersections.push( [trail[i], trail[i + 1]] );
-  //       }
-  //     }
-  //   });
-  // }
+    if (trails.length > 1) {
+        for (let i = 0; i < trails.length - 1; i++) {
+            for (let j = i + 1; j < trails.length; j++) {
+                const val1 = trails[i].geometry;
+                const val2 = trails[j].geometry;
+                const comparision = geometryEngine.intersects(val1, val2);
+                if (comparision) {
+                    intersections.push([trails[i].id, trails[j].id]);
+                }
+            }
+        }
+    }
 
-  return {
-    trails: trails,
-    intersections: intersections
-  };
+    if (intersections) {
+        for (let i = 0; i < intersections.length - 1; i++) {
+            for (let j = i + 1; j < intersections.length; j++) {
+                const val1 = intersections[i];
+                const val2 = intersections[j];
+                // TODO: Combine Arrays if shared values
+
+            }
+        }
+    }
+
+    return {
+        trails: trails,
+        intersections: intersections
+    };
+
 }
-
-const findOne = function(haystack, arr) {
-  return arr.some( function(v) {
-      return haystack.indexOf(v) >= 0;
-  });
-};

@@ -10,7 +10,7 @@ import * as SceneView from "esri/views/SceneView";
 import * as WebScene from "esri/WebScene";
 
 import {
-  getIntersectingTrails
+    getIntersectingTrails
 } from "./utils";
 
 import "../../style/side-panel.scss";
@@ -34,57 +34,57 @@ export default class SidePanel {
         state.watch("selectedTrailId", (id) => {
             this.emptyDetails();
             if (id) {
-              const selectedTrail = this.trails.filter((trail) => { return trail.id === id; })[0];
-              this.displayInfo(selectedTrail);
+                const selectedTrail = this.trails.filter((trail) => { return trail.id === id; })[0];
+                this.displayInfo(selectedTrail);
 
-              // Add trails to trailRoute
-              this.addRouteEvent(this.state, this.trails);
+                // Add trails to trailRoute
+                this.addRouteEvent(this.state, this.trails);
             }
         });
 
         // Watches for changes in trailRoute and executes dispalyRoutes
         state.watch("trailRoute", (value) => {
-          // TODO: sort and do magic before routes are disalyed
-          this.displayRoutes(getIntersectingTrails(value));
+            // TODO: sort and do magic before routes are disalyed
+            this.displayRoutes(getIntersectingTrails(value));
         });
 
         on(document.querySelector("#routesPanel"), ".removeTrail:click", function(evt) {
-          const trailid = evt.target.dataset.trailid;
-          const trailRoute = state.trailRoute;
+            const trailid = evt.target.dataset.trailid;
+            const trailRoute = state.trailRoute;
 
-          if ( trailRoute ) {
-            for (const i in trailRoute) {
-              if (trailRoute[i].id === trailid) {
-                delete trailRoute[i];
-              }
+            if (trailRoute) {
+                trailRoute.forEach(function(value, i) {
+                    if (value.id === trailid) {
+                        trailRoute.splice(i, 1);
+                    }
+                });
+                state.setTrailRoutes(trailRoute.slice());
             }
-            state.setTrailRoutes(trailRoute.slice());
-          }
         });
     }
 
     // Add trail to Route
     addRouteEvent(state, trails) {
-      on(document.querySelector("#addRoute"), "click", (evt) => {
-        const trailid = evt.target.dataset.trailid;
-        const selectedTrail = trails.filter((trail) => { return trail.id === trailid; })[0];
-        const trailRoute = state.trailRoute;
+        on(document.querySelector("#addRoute"), "click", (evt) => {
+            const trailid = evt.target.dataset.trailid;
+            const selectedTrail = trails.filter((trail) => { return trail.id === trailid; })[0];
+            const trailRoute = state.trailRoute;
 
-        if ( !trailRoute ) {
-          // Add trail to route.
-          state.setTrailRoutes(new Array(selectedTrail));
-        } else {
-          // Check to see if trial in Route.
-          const found = trailRoute.some( function(el) {
-            return el.id === trailid;
-          });
+            if (!trailRoute) {
+                // Add trail to route.
+                state.setTrailRoutes(new Array(selectedTrail));
+            } else {
+                // Check to see if trial in Route.
+                const found = trailRoute.some(function(el) {
+                    return el.id === trailid;
+                });
 
-          if (!found) {
-            trailRoute.push(selectedTrail);
-            state.setTrailRoutes(trailRoute.slice());
-          }
-        }
-      });
+                if (!found) {
+                    trailRoute.push(selectedTrail);
+                    state.setTrailRoutes(trailRoute.slice());
+                }
+            }
+        });
     }
 
     // removes active trail in dom and cshows displayAppInfo
@@ -113,19 +113,19 @@ export default class SidePanel {
 
     // Updates Routes in Dom
     displayRoutes(value) {
-      console.log(value.intersections);
-      let content = "";
-      if (value.trails) {
-        value.trails.forEach(function(trail) {
-          content +=  `<div class="route" data-trailID="${trail.id}">`;
-            content +=  `<span class="routeTitle">${trail.name}</span><br />`;
-            content +=  `<span class="routeClass">${trail.trail_class}</span><br />`;
-            content +=  `<span class="routeSteps">${trail.steps_to_travel}</span><br />`;
-            content +=  `<span class="routeLength">${trail.length_miles}</span><br />`;
-            content +=  `<button class="removeTrail" data-trailID="${trail.id}">Remove Trail</button>`;
-          content +=  `</div>`;
-        });
-      }
-      this.routesContainer.innerHTML = content;
+        console.log(value.intersections);
+        let content = "";
+        if (value.trails) {
+            value.trails.forEach(function(trail) {
+                content += `<div class="route" data-trailID="${trail.id}">`;
+                content += `<span class="routeTitle">${trail.name}</span><br />`;
+                content += `<span class="routeClass">${trail.trail_class}</span><br />`;
+                content += `<span class="routeSteps">${trail.steps_to_travel}</span><br />`;
+                content += `<span class="routeLength">${trail.length_miles}</span><br />`;
+                content += `<button class="removeTrail" data-trailID="${trail.id}">Remove Trail</button>`;
+                content += `</div>`;
+            });
+        }
+        this.routesContainer.innerHTML = content;
     }
 }

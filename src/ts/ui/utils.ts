@@ -3,9 +3,9 @@ import * as geometryEngine from "esri/geometry/geometryEngine";
 export function getIntersectingTrails(trails) {
     const intersections = [];
     const groups = [];
+    const groupedIds = [];
     const noGroups = [];
     const visited = {};
-    let groupedIds = [];
     let v;
 
     if (trails.length > 1) {
@@ -49,7 +49,9 @@ export function getIntersectingTrails(trails) {
             }
         });
     } else {
-        noGroups.push(trails[0]);
+        if (trails.length === 1) {
+            noGroups.push(trails[0]);
+        }
     }
 
 

@@ -113,11 +113,26 @@ export default class SidePanel {
 
     // Updates Routes in Dom
     displayRoutes(value) {
-        console.log(value.intersections);
+        const noGroups = value.intersections.noGroups;
+        const groups = value.intersections.groups;
         let content = "";
-        if (value.trails) {
-            value.trails.forEach(function(trail) {
-                content += `<div class="route" data-trailID="${trail.id}">`;
+        if (groups.length >= 1) {
+            groups.forEach((group, index) => {
+                content += `<div class="route group group-${index + 1}">`;
+                content += `<h2>Route ${index + 1}</h2>`;
+                group.forEach((trail) => {
+                    content += `<div class="group-single" data-trailID="${trail.id}">`;
+                    content += `<span class="routeTitle">${trail.name}</span><br />`;
+                    content += `<button class="removeTrail" data-trailID="${trail.id}">Remove Trail</button>`;
+                    content += `</div>`;
+                });
+                content += `</div>`;
+            });
+        }
+        if (noGroups.length >= 1) {
+            content += `<h2>Not in Route</h2>`;
+            noGroups.forEach((trail, index) => {
+                content += `<div class="route no-group no-group-${index + 1}" data-trailID="${trail.id}">`;
                 content += `<span class="routeTitle">${trail.name}</span><br />`;
                 content += `<span class="routeClass">${trail.trail_class}</span><br />`;
                 content += `<span class="routeSteps">${trail.steps_to_travel}</span><br />`;

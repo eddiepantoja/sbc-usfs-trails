@@ -5,6 +5,7 @@ export function getIntersectingTrails(trails) {
     const groups = [];
     const noGroups = [];
     const visited = {};
+    let groupedIds = [];
     let v;
 
     if (trails.length > 1) {
@@ -18,33 +19,45 @@ export function getIntersectingTrails(trails) {
                 }
             }
         }
-    }
-
-    // Group trails based on connectivity
-    const adjlist = convert_edgelist_to_adjlist(intersections);
-    for (v in adjlist) {
-        if (adjlist.hasOwnProperty(v) && !visited[v]) {
-            groups.push(bfs(v, adjlist, visited));
-        }
-    }
-
-    // Find values in trail that are not grouped.
-    trails.forEach(trail => {
-        for (const group of groups) {
-
-            if (!group.includes(trail.id)) {
-                noGroups.push(trail.id);
-                break;
+        // Group trails based on connectivity and return ID
+        const adjlist = convert_edgelist_to_adjlist(intersections);
+        for (v in adjlist) {
+            if (adjlist.hasOwnProperty(v) && !visited[v]) {
+                groupedIds.push(bfs(v, adjlist, visited));
             }
         }
-    });
+
+        // ID trail id to retrieve trail.
+        groupedIds.forEach(group => {
+            const singleGroup = [];
+            for (const trailid of group) {
+                for (const trail of trails) {
+                    if (trail.id === trailid) {
+                        singleGroup.push(trail);
+                        break;
+                    }
+                }
+            }
+            groups.push(singleGroup);
+        });
+
+        // Find values in trail that are not grouped.
+        const flatGroup = [].concat.apply([], groupedIds);
+        trails.forEach(trail => {
+            if (!flatGroup.includes(trail.id)) {
+                noGroups.push(trail);
+            }
+        });
+    } else {
+        noGroups.push(trails[0]);
+    }
+
 
 
     return {
-        trails: trails,
         intersections: {
             "groups": groups,
-            "no-groups": noGroups
+            "noGroups": noGroups
         }
     };
 

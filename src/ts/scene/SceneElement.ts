@@ -155,6 +155,7 @@ export default class SceneElement {
     private onViewClick(event) {
         // check if the user is online
         if (this.state.online) {
+            this.showLoadingIcon(event);
             this.view.hitTest(event).then(response => {
                 this.view.popup.close();
                 const result = response.results[0];
@@ -173,10 +174,29 @@ export default class SceneElement {
                         } else {
                             this.state.setSelectedTrailId(null);
                         }
+                        this.removeLoadingIcon();
                     })
                     .catch(err => console.log(err));
             });
         }
+    }
+
+    // Loading Icon
+    private showLoadingIcon(event) {
+        domConstruct.create("span", {
+            class: "fa fa-spinner fa-spin",
+            id: "loadingIcon",
+            style: {
+            position: "absolute",
+            fontSize: "40px",
+            top: `${event.screenPoint.y - 15}px`,
+            left: `${event.screenPoint.x - 15}px`
+            }
+        }, document.body);
+    }
+
+    private removeLoadingIcon() {
+        domConstruct.destroy("loadingIcon");
     }
 
     // Update selected trail

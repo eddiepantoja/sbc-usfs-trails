@@ -84,7 +84,7 @@ export function createLabelClass(options) {
             },
             callout: {
                 type: "line",
-                size: 1,
+                size: 2,
                 color: "white",
                 border: {
                     color: color.halo

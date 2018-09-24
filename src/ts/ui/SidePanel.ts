@@ -104,8 +104,8 @@ export default class SidePanel {
             <div class="detailContent">
                 <div id="detailTitle">${trail.name}</div>
                 <div id="detailClass"><b>Class: </b> ${trail.trail_class}</div>
-                <div id="detailSteps"><b>Steps: </b> ${trail.steps_to_travel}</div>
-                <div id="detailLength"><b>Distance: </b> ${trail.length_miles} mi</div>
+                <div id="detailSteps"><b>Steps: </b> ${trail.steps_to_travel.toLocaleString("en", {maximumFractionDigits: 2})}</div>
+                <div id="detailLength"><b>Distance: </b> ${trail.length_miles.toLocaleString("en", {maximumFractionDigits: 2})} mi</div>
                 <button id="addRoute" data-trailId="${trail.id}">Add to Route</button>
             </div>
         `;
@@ -135,8 +135,8 @@ export default class SidePanel {
                 content += `<div class="route no-group no-group-${index + 1}" data-trailID="${trail.id}">`;
                 content += `<span class="routeTitle">${trail.name}</span><br />`;
                 content += `<span class="routeClass">${trail.trail_class}</span><br />`;
-                content += `<span class="routeSteps">${trail.steps_to_travel}</span><br />`;
-                content += `<span class="routeLength">${trail.length_miles}</span><br />`;
+                content += `<span class="routeSteps">${trail.steps_to_travel.toLocaleString("en", {maximumFractionDigits: 2})}</span><br />`;
+                content += `<span class="routeLength">${trail.length_miles.toLocaleString("en", {maximumFractionDigits: 2})}</span><br />`;
                 content += `<button class="removeTrail" data-trailID="${trail.id}">Remove Trail</button>`;
                 content += `</div>`;
             });

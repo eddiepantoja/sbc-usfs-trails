@@ -4,14 +4,16 @@
   top: 0;
   right: 0;
   height: 100%;
-  background: rgba(255, 255, 255, 1);
+  background: #F4F6F6;
   width: 300px;
+  font-family: 'Cabin', sans-serif;
 
   .panel {
     display: flex;
     flex-direction: column;
     padding-left: 0;
-    margin-bottom: 0;
+    margin: 15px;
+    background-color: #fff;
     >* {
       position: relative;
       display: block;
@@ -26,9 +28,79 @@
       }
 
       #detailTitle {
+        font-family: 'Roboto Condensed', sans-serif;
         font-size: 1.5rem;
         margin-bottom: 15px;
       }
     }
   }
+
+  .detailContent {
+    animation:bg 2s ease-in;
+    -webkit-animation:bg 2s ease-in;
+    -moz-animation:bg 2s ease-in;
+    -ms-animation:bg 2s ease-in;
+    -o-animation:bg 2s ease-in;
+  }
+
+  @-webkit-keyframes bg{
+    0%{
+      background:rgba(255,165,0,1);
+    }
+    20%{
+          background:rgba(255,165,0,0.8);
+    }
+    50%, 70%{
+          background:rgba(255,165,0,0.5);
+    }
+    100% {
+      background:rgba(255,165,0,0);
+    }
+  }
+
+  @-moz-keyframes bg{
+    0%{
+      background:rgba(255,165,0,1);
+    }
+    20%{
+          background:rgba(255,165,0,0.8);
+    }
+    50%, 70%{
+          background:rgba(255,165,0,0.5);
+    }
+    100% {
+      background:rgba(255,165,0,0);
+    }
+  }
+
+  @-ms-keyframes bg{
+    0%{
+      background:rgba(255,165,0,1);
+    }
+    20%{
+          background:rgba(255,165,0,0.8);
+    }
+    50%, 70% {
+          background:rgba(255,165,0,0.5);
+    }
+    100% {
+      background:rgba(255,165,0,0);
+    }
+  }
+
+  @-o-keyframes bg{
+    0%{
+      background:rgba(255,165,0,1);
+    }
+    20%{
+          background:rgba(255,165,0,0.8);
+    }
+    50%, 70% {
+          background:rgba(255,165,0,0.5);
+    }
+    100%{
+      background:rgba(255,165,0,0);
+    }
+  }
 }
+

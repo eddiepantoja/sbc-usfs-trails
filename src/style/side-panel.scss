@@ -1,106 +1,92 @@
+@import 'variables';
+
 .sidePanel {
   z-index: 99;
   position: absolute;
   top: 0;
   right: 0;
   height: 100%;
-  background: #F4F6F6;
+  background: $off-black;
   width: 300px;
   font-family: 'Cabin', sans-serif;
+  color: $white;
+  overflow-y: auto;
 
   .panel {
     display: flex;
     flex-direction: column;
     padding-left: 0;
     margin: 15px;
-    background-color: #fff;
+    background-color: $dark-grey;
     >* {
       position: relative;
       display: block;
       padding: .75rem 1.25rem;
       margin-bottom: -1px;
-      background-color: #fff;
-      border: 1px solid rgba(0,0,0,.125);
+      background-color: $dark-grey;
 
       &.detail-placeholder {
+        font-family: 'Roboto Condensed', sans-serif;
         padding: 25% 1.25rem;
         font-size: 1.25rem;
+        color: $yellow;
       }
+    }
+    .detailContent {
+      text-align: center; 
 
       #detailTitle {
         font-family: 'Roboto Condensed', sans-serif;
         font-size: 1.5rem;
         margin-bottom: 15px;
+        color: $yellow;
+      }
+      #detailClass {
+        text-transform: capitalize;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      #detailSteps, #detailLength {
+        text-align: center;
+        margin-bottom: 20px;
+        i {
+          margin-bottom: 10px;
+        }
+      }
+      button {
+        font-size: 16px;
+        width: 80%;
+        margin: 0 auto 10px;
+        padding: 5px 0;
+        border: none;
+        color: $dark-grey;
+        background-color: $green;
+        -webkit-transition: background-color 300ms linear;
+        -ms-transition: background-color 300ms linear;
+        transition: background-color 300ms linear;
+        &:hover {
+          background-color: $dark-green;
+        }
       }
     }
-  }
 
-  .detailContent {
-    animation:bg 2s ease-in;
-    -webkit-animation:bg 2s ease-in;
-    -moz-animation:bg 2s ease-in;
-    -ms-animation:bg 2s ease-in;
-    -o-animation:bg 2s ease-in;
-  }
-
-  @-webkit-keyframes bg{
-    0%{
-      background:rgba(255,165,0,1);
-    }
-    20%{
-          background:rgba(255,165,0,0.8);
-    }
-    50%, 70%{
-          background:rgba(255,165,0,0.5);
-    }
-    100% {
-      background:rgba(255,165,0,0);
-    }
-  }
-
-  @-moz-keyframes bg{
-    0%{
-      background:rgba(255,165,0,1);
-    }
-    20%{
-          background:rgba(255,165,0,0.8);
-    }
-    50%, 70%{
-          background:rgba(255,165,0,0.5);
-    }
-    100% {
-      background:rgba(255,165,0,0);
-    }
-  }
-
-  @-ms-keyframes bg{
-    0%{
-      background:rgba(255,165,0,1);
-    }
-    20%{
-          background:rgba(255,165,0,0.8);
-    }
-    50%, 70% {
-          background:rgba(255,165,0,0.5);
-    }
-    100% {
-      background:rgba(255,165,0,0);
-    }
-  }
-
-  @-o-keyframes bg{
-    0%{
-      background:rgba(255,165,0,1);
-    }
-    20%{
-          background:rgba(255,165,0,0.8);
-    }
-    50%, 70% {
-          background:rgba(255,165,0,0.5);
-    }
-    100%{
-      background:rgba(255,165,0,0);
+    .not-route {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: 1rem;
+      text-align: center;
+      color: $green;
+      margin-top: 10px;
     }
   }
 }
 
+.column {
+  float: left;
+  width: 50%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}

@@ -1,8 +1,10 @@
-$fa-font-path: "../../node_modules/font-awesome/fonts";
-@import "../../node_modules/font-awesome/scss/font-awesome";
+$fa-font-path: "../../node_modules/@fortawesome/fontawesome-free/webfonts";
+@import "../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "../../node_modules/@fortawesome/fontawesome-free/scss/regular";
+@import "../../node_modules/@fortawesome/fontawesome-free/scss/solid";
 @import 'variables';
 
 #loadingIcon {
-  color: $orange;
+  color: $yellow;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }

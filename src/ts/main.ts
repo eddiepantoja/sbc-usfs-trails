@@ -18,5 +18,5 @@ const sceneElement = new SceneElement(state);
 // Init Trail and create menu
 trailManager.initTrails(state)
     .then(() => {
-        const sidePanel = new SidePanel(state);
+        const sidePanel = new SidePanel(state, sceneElement);
     });

@@ -79,7 +79,7 @@
       margin-top: 10px;
       margin-bottom: 15px;
       &.no-route {
-        margin-top: 30px;
+        margin-top: 15px;
       }
     }
     .route {
@@ -104,6 +104,7 @@
       }
       &.group {
         cursor: pointer;
+        margin-bottom: 15px;
         .group-single {
           border-top: 1px solid #ffffff;
           position: relative;

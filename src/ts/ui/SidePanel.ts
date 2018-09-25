@@ -105,8 +105,8 @@ export default class SidePanel {
                 <div id="detailTitle">${trail.name}</div>
                 <div id="detailClass">Class: ${trail.trail_class}</div>
                 <div class="row">
-                    <div id="detailSteps" class="column"><i class="fas fa-shoe-prints"></i><br />${trail.steps_to_travel.toLocaleString("en", { maximumFractionDigits: 2 })}</div>
-                    <div id="detailLength" class="column"><i class="fas fa-route"></i><br />${trail.length_miles.toLocaleString("en", { maximumFractionDigits: 2 })} mi</div>
+                  <div id="detailLength" class="column"><i class="fas fa-route"></i><br />${trail.length_miles.toLocaleString("en", { maximumFractionDigits: 2 })} mi</div>
+                  <div id="detailSteps" class="column"><i class="fas fa-shoe-prints"></i><br />${trail.steps_to_travel.toLocaleString("en", { maximumFractionDigits: 2 })}</div>
                 </div>
                 <button id="addRoute" data-trailId="${trail.id}">Add to Route</button>
             </div>
@@ -120,29 +120,47 @@ export default class SidePanel {
         let content = "";
         if (groups.length >= 1) {
             groups.forEach((group, index) => {
-                content += `<div class="route group group-${index + 1}">`;
-                content += `<h2>Route ${index + 1}</h2>`;
+                let routeLength = 0;
+                let routeSteps = 0;
+
+                content += `
+                  <div class="route group group-${index + 1}">
+                  <div class="route-heading">Route ${index + 1}</div>
+                `;
+
                 group.forEach((trail) => {
-                    content += `<div class="group-single" data-trailID="${trail.id}">`;
-                    content += `<span class="routeTitle">${trail.name}</span><br />`;
-                    content += `<button class="removeTrail" data-trailID="${trail.id}">Remove Trail</button>`;
-                    content += `</div>`;
+                    routeLength += trail.length_miles;
+                    routeSteps += trail.steps_to_travel;
+
+                    content += `
+                      <div class="group-single" data-trailID="${trail.id}">
+                        <div class="routeTitle">${trail.name}</div>
+                        <i class="far fa-window-close removeTrail" data-trailID="${trail.id}"></i>
+                      </div>`;
                 });
-                content += `</div>`;
+                content += `
+                    <div class="row">
+                      <div class="routeLength column"><i class="fas fa-route"></i><br />${routeLength.toLocaleString("en", { maximumFractionDigits: 2 })} mi</div>
+                      <div class="routeSteps column"><i class="fas fa-shoe-prints"></i><br />${routeSteps.toLocaleString("en", { maximumFractionDigits: 2 })}</div>
+                    </div>
+                  </div>
+                `;
             });
         }
         if (noGroups.length >= 1) {
-            content += `<div class="not-route">Not in Route</div>`;
+            content += `<div class="route-heading no-route">Not in Route</div>`;
             noGroups.forEach((trail, index) => {
-                content += `<div class="route no-group no-group-${index + 1}" data-trailID="${trail.id}">`;
-                content += `<span class="routeTitle">${trail.name}</span><br />`;
-                content += `<span class="routeClass">${trail.trail_class}</span><br />`;
-                content += `<div class="row">
-                                <div class="routeSteps column"><i class="fas fa-shoe-prints"></i><br />${trail.steps_to_travel.toLocaleString("en", { maximumFractionDigits: 2 })}</div>
-                                <div class="routeLength column"><i class="fas fa-route"></i><br />${trail.length_miles.toLocaleString("en", { maximumFractionDigits: 2 })} mi</div>
-                            </div>`;
-                content += `<button class="removeTrail" data-trailID="${trail.id}">Remove Trail</button>`;
-                content += `</div>`;
+                content += `
+                  <div class="route no-group no-group-${index + 1}" data-trailID="${trail.id}">
+                    <div class="routeTitle">${trail.name}</div>
+                    <div class="routeClass">Class: ${trail.trail_class}</div>
+                    <div class="row">
+                      <div class="routeLength column"><i class="fas fa-route"></i><br />${trail.length_miles.toLocaleString("en", { maximumFractionDigits: 2 })} mi</div>
+                      <div class="routeSteps column"><i class="fas fa-shoe-prints"></i><br />${trail.steps_to_travel.toLocaleString("en", { maximumFractionDigits: 2 })}</div>
+                    </div>
+                    <i class="far fa-window-close removeTrail" data-trailID="${trail.id}"></i>
+                  </div>
+                `;
             });
         }
         this.routesContainer.innerHTML = content;

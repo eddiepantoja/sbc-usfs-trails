@@ -17,7 +17,6 @@
     flex-direction: column;
     padding-left: 0;
     margin: 15px;
-    background-color: $dark-grey;
     >* {
       position: relative;
       display: block;
@@ -33,7 +32,7 @@
       }
     }
     .detailContent {
-      text-align: center; 
+      text-align: center;
 
       #detailTitle {
         font-family: 'Roboto Condensed', sans-serif;
@@ -70,12 +69,68 @@
       }
     }
 
-    .not-route {
+    .route-heading {
       font-family: 'Roboto Condensed', sans-serif;
-      font-size: 1rem;
+      font-size: 1.5rem;
       text-align: center;
       color: $green;
       margin-top: 10px;
+      margin-bottom: 15px;
+      &.no-route {
+        margin-top: 30px;
+      }
+    }
+    .route {
+      .routeTitle {
+        font-size: 1.3rem;
+        color: $yellow;
+        font-family: 'Roboto Condensed', sans-serif;
+        padding: 15px 0;
+      }
+      .routeClass {
+        margin-bottom: 20px;
+      }
+      .routeSteps, .routeLength {
+        font-family: 'Roboto Condensed', sans-serif;
+        text-align: center;
+        i {
+          margin-bottom: 10px;
+        }
+      }
+      &.group {
+        .group-single {
+          border-top: 1px solid #ffffff;
+          position: relative;
+          .routeTitle {
+            margin-right: 30px;
+          }
+          &:last-child {
+            border-bottom: 1px solid #ffffff;
+          }
+        }
+        .row {
+          margin: 15px 0;
+        }
+      }
+      &.no-group {
+        margin-bottom: 15px;
+        .row {
+          padding-bottom: 10px;
+        }
+      }
+      &.no-group, &.group .group-single {
+        cursor: pointer;
+        &:hover {
+          background-color: $grey;
+        }
+      }
+      .removeTrail {
+        cursor: pointer;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: $red-light;
+      }
     }
   }
 }

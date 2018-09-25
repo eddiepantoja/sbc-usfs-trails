@@ -112,9 +112,9 @@ const bfs = function(v, adjlist, visited) {
 };
 
 export function createRouteSymbol(node, trails) {
-    let route = [];
+    const route = [];
     let routeIds = node.target.dataset.routeids;
-    routeIds = routeIds.split(',');
+    routeIds = routeIds.split(",");
 
     routeIds.forEach((id) => {
         route.push(trails.filter((trail) => { return trail.id === id; })[0].geometry);

@@ -79,6 +79,7 @@ export default class SidePanel {
             if (trailid) {
                 state.setSelectedTrailId(trailid);
             } else {
+                graphicsLayer.removeAll();
                 const geometry = createRouteSymbol(evt, state.trails);
                 graphicsLayer.add(geometry);
                 scene.view.goTo(
@@ -148,7 +149,7 @@ export default class SidePanel {
             groups.forEach((group, index) => {
                 let routeLength = 0;
                 let routeSteps = 0;
-                let routeArray = [];
+                const routeArray = [];
 
                 group.forEach((trail) => {
                     routeArray.push(trail.id);

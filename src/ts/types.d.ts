@@ -10,6 +10,8 @@ export interface State extends Accessor {
     view: SceneView;
     trails: Array<Trail>;
     online: boolean;
+    trailRoute: Array<Trail>;
+    setTrailRoutes: (value: Array<Trail>) => void;
 }
 
 export interface Trail {

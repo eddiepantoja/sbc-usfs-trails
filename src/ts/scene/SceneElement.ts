@@ -78,7 +78,7 @@ export default class SceneElement {
     private initView() {
         const map = new Map({
             basemap: "satellite",
-            ground: "world-elevation",
+            ground: "world-elevation"
         });
 
         const view = new SceneView({
@@ -155,6 +155,7 @@ export default class SceneElement {
     private onViewClick(event) {
         // check if the user is online
         if (this.state.online) {
+            this.showLoadingIcon(event);
             this.view.hitTest(event).then(response => {
                 this.view.popup.close();
                 const result = response.results[0];
@@ -170,23 +171,32 @@ export default class SceneElement {
                             this.state.setSelectedTrailId(
                                 results.features[0].attributes[config.data.trailAttributes.id]
                             );
-                            this.view.popup.open({
-                                // Set the popup's title to the coordinates of the location
-                                title: "Trail: " + results.features[0].attributes[config.data.trailAttributes.name],
-                                location: event.mapPoint // Set the location of the popup to the clicked location
-                            });
-                            this.view.popup.content =
-                                    "Trail Class: " + results.features[0].attributes[config.data.trailAttributes.trail_class] + "<br />" +
-                                    "Distance: " + parseFloat(results.features[0].attributes[config.data.trailAttributes.length_miles].toFixed(2)).toLocaleString('en') + " mi<br />" +
-                                    "Steps: " + parseFloat(results.features[0].attributes[config.data.trailAttributes.steps_to_travel].toFixed(2)).toLocaleString('en') + "<br />" +
-                                    "<button id='addTrail' trail-id='" + results.features[0].attributes[config.data.trailAttributes.id] + "'>Add Trail to Sidebar</button>";
                         } else {
                             this.state.setSelectedTrailId(null);
                         }
+                        this.removeLoadingIcon();
                     })
                     .catch(err => console.log(err));
             });
         }
+    }
+
+    // Loading Icon
+    private showLoadingIcon(event) {
+        domConstruct.create("span", {
+            class: "fa fa-spinner fa-spin",
+            id: "loadingIcon",
+            style: {
+            position: "absolute",
+            fontSize: "40px",
+            top: `${event.screenPoint.y - 15}px`,
+            left: `${event.screenPoint.x - 15}px`
+            }
+        }, document.body);
+    }
+
+    private removeLoadingIcon() {
+        domConstruct.destroy("loadingIcon");
     }
 
     // Update selected trail
@@ -218,7 +228,4 @@ export default class SceneElement {
             return trail.id === oldId;
         })[0];
     }
-
-    // Create Popup
-
 }

@@ -9,6 +9,7 @@ import {
 
 @subclass()
 export default class State extends declared(Accessor) {
+
     @property()
     displayLoading: boolean = true;
 
@@ -16,6 +17,16 @@ export default class State extends declared(Accessor) {
     selectedTrailId: string = null;
     setSelectedTrailId(id: string) {
         this.selectedTrailId = id;
+    }
+
+    @property()
+    trailRoute: Array<Trail> = null;
+
+    setTrailRoutes(value: Array<Trail>) {
+        const oldValue = this._get<Array<Trail>>("trailRoute");
+        if (oldValue !== value) {
+            this._set("trailRoute", value);
+        }
     }
 
     @property()

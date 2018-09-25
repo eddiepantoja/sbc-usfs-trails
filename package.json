@@ -39,8 +39,8 @@
     "webpack-dev-server": "^2.9.7"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.3.1",
     "amcharts3": "^3.21.12",
-    "font-awesome": "^4.7.0",
     "nouislider": "^11.0.0"
   }
 }

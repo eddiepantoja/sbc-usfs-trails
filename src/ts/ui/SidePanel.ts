@@ -79,7 +79,12 @@ export default class SidePanel {
             if (trailid) {
                 state.setSelectedTrailId(trailid);
             } else {
-                graphicsLayer.add(createRouteSymbol(evt, state.trails));
+                const geometry = createRouteSymbol(evt, state.trails);
+                graphicsLayer.add(geometry);
+                scene.view.goTo(
+                    { target: geometry, tilt: 60 },
+                    { speedFactor: 0.5 }
+                );
             }
         });
     }

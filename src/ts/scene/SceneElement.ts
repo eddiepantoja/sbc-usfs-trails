@@ -170,7 +170,7 @@ export default class SceneElement {
 
                     const query = this.trailsLayer.createQuery();
                     query.geometry = result.mapPoint;
-                    query.distance = 400;
+                    query.distance = 200;
                     query.units = "meters";
                     query.spatialRelationship = "intersects";
                     this.trailsLayer

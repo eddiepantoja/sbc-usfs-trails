@@ -51,9 +51,17 @@ export default class SidePanel {
 
         // Watches for changes in trailRoute and executes dispalyRoutes
         state.watch("trailRoute", (value) => {
+            const localValue = value;
+            localStorage.setItem("trailRoute", JSON.stringify(localValue));
             // TODO: sort and do magic before routes are disalyed
             this.displayRoutes(getIntersectingTrails(value));
         });
+
+        // Get Trail Route from Local Storage
+        const storage = JSON.parse(localStorage.getItem("trailRoute"));
+        if (storage) {
+            this.state.trailRoute = storage;
+        }
 
         on(document.querySelector("#routesPanel"), ".removeTrail:click", function(evt) {
             const trailid = evt.target.dataset.trailid;

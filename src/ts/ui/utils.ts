@@ -1,4 +1,5 @@
 import * as geometryEngine from "esri/geometry/geometryEngine";
+import * as Graphic from "esri/Graphic";
 
 export function getIntersectingTrails(trails) {
     const intersections = [];
@@ -54,8 +55,6 @@ export function getIntersectingTrails(trails) {
         }
     }
 
-
-
     return {
         intersections: {
             "groups": groups,
@@ -64,7 +63,6 @@ export function getIntersectingTrails(trails) {
     };
 
 }
-
 const convert_edgelist_to_adjlist = function(edgelist) {
     const adjlist = {};
     let i, len, pair, u, v;
@@ -87,7 +85,6 @@ const convert_edgelist_to_adjlist = function(edgelist) {
     }
     return adjlist;
 };
-
 // Breadth First Search using adjacency list
 const bfs = function(v, adjlist, visited) {
     const q = [];
@@ -113,3 +110,34 @@ const bfs = function(v, adjlist, visited) {
     }
     return current_group;
 };
+
+export function createRouteSymbol(node, trails) {
+    const route = [];
+    let routeIds = node.target.dataset.routeids;
+    routeIds = routeIds.split(",");
+
+    routeIds.forEach((id) => {
+        route.push(trails.filter((trail) => { return trail.id === id; })[0].geometry);
+    });
+
+    const routeGeometry = geometryEngine.union(route);
+
+    const polylineSymbol = {
+        type: "simple-line",  // autocasts as SimpleLineSymbol()
+        color: [255, 221, 0],
+        width: 4
+    };
+
+    const polylineAtt = {
+        Name: "Keystone Pipeline",
+        Owner: "TransCanada"
+    };
+
+    const polylineGraphic = new Graphic({
+        geometry: routeGeometry,
+        symbol: polylineSymbol,
+        attributes: polylineAtt
+    });
+    return polylineGraphic;
+}
+

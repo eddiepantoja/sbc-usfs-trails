@@ -3,14 +3,18 @@ import * as on from "dojo/on";
 import * as domConstruct from "dojo/dom-construct";
 import * as domClass from "dojo/dom-class";
 import * as query from "dojo/query";
+import * as mouse from "dojo/mouse";
 
 import config from "../config";
 import { State, Trail } from "../types";
 import * as SceneView from "esri/views/SceneView";
 import * as WebScene from "esri/WebScene";
+import * as GraphicsLayer from "esri/layers/GraphicsLayer";
+import * as Graphic from "esri/Graphic";
 
 import {
-    getIntersectingTrails
+    getIntersectingTrails,
+    createRouteSymbol
 } from "./utils";
 
 import "../../style/side-panel.scss";
@@ -21,7 +25,7 @@ export default class SidePanel {
     detailsContainer: any;
     routesContainer: any;
 
-    constructor(state: State) {
+    constructor(state: State, scene) {
 
         this.state = state;
         this.trails = state.trails;
@@ -30,8 +34,11 @@ export default class SidePanel {
         this.routesContainer = dom.byId("routesPanel");
 
         this.emptyDetails();
+        const graphicsLayer = new GraphicsLayer();
+        scene.view.map.add(graphicsLayer);
 
         state.watch("selectedTrailId", (id) => {
+            graphicsLayer.removeAll();
             this.emptyDetails();
             if (id) {
                 const selectedTrail = this.trails.filter((trail) => { return trail.id === id; })[0];
@@ -59,6 +66,26 @@ export default class SidePanel {
                     }
                 });
                 state.setTrailRoutes(trailRoute.slice());
+            }
+        });
+
+        on(document.querySelector("#routesPanel"), ".no-group:click", function(evt) {
+            const trailid = evt.target.dataset.trailid;
+            state.setSelectedTrailId(trailid);
+        });
+
+        on(document.querySelector("#routesPanel"), ".group:click", function(evt) {
+            const trailid = evt.target.dataset.trailid;
+            if (trailid) {
+                state.setSelectedTrailId(trailid);
+            } else {
+                graphicsLayer.removeAll();
+                const geometry = createRouteSymbol(evt, state.trails);
+                graphicsLayer.add(geometry);
+                scene.view.goTo(
+                    { target: geometry, tilt: 60 },
+                    { speedFactor: 0.5 }
+                );
             }
         });
     }
@@ -122,10 +149,15 @@ export default class SidePanel {
             groups.forEach((group, index) => {
                 let routeLength = 0;
                 let routeSteps = 0;
+                const routeArray = [];
+
+                group.forEach((trail) => {
+                    routeArray.push(trail.id);
+                });
 
                 content += `
-                  <div class="route group group-${index + 1}">
-                  <div class="route-heading">Route ${index + 1}</div>
+                  <div class="route group group-${index + 1}" data-routeIDs="${routeArray}">
+                    <div class="route-heading">Route ${index + 1}</div>
                 `;
 
                 group.forEach((trail) => {

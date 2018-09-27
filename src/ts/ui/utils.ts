@@ -125,7 +125,7 @@ export function createRouteSymbol(node, trails) {
     const polylineSymbol = {
         type: "simple-line",  // autocasts as SimpleLineSymbol()
         color: [33, 237, 111],
-        width: 3
+        width: 5
     };
 
     const polylineAtt = {

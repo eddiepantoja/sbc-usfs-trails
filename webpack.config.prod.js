@@ -12,7 +12,9 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    main: ['./src/ts/main.ts'],
+    main: [
+      './src/ts/main.ts',
+    ],
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -48,14 +50,11 @@ module.exports = {
       {
         test: /\.scss$/,
         use: extractSass.extract({
-          use: [
-            {
-              loader: 'css-loader',
-            },
-            {
-              loader: 'sass-loader',
-            },
-          ],
+          use: [{
+            loader: 'css-loader',
+          }, {
+            loader: 'sass-loader',
+          }],
           // use style-loader in development
           fallback: 'style-loader',
         }),
@@ -77,9 +76,14 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js', '.json'],
   },
-  devtool: 'source-map',
   plugins: [
     extractSass,
+    new ServiceWorkerWebpackPlugin({
+      entry: path.join(__dirname, 'src/ts/sw.ts'),
+      filename: '../sw.js',
+      publicPath: '/sbc-usfs-trails/dist/',
+    }),
+    new UglifyJsPlugin(),
 
     /* new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
@@ -94,13 +98,12 @@ module.exports = {
       // exclude any esri or dojo modules from the bundle
       // these are included in the ArcGIS API for JavaScript
       // and its Dojo loader will pull them from its own build output
-      if (
-        /^dojo/.test(request)
+      if (/^dojo/.test(request)
         || /^dojox/.test(request)
         || /^dijit/.test(request)
         || /^esri/.test(request)
       ) {
-        return callback(null, 'amd ' + request);
+        return callback(null, `amd ${request}`);
       }
       callback();
     },

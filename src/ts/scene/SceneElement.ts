@@ -84,7 +84,14 @@ export default class SceneElement {
         const view = new SceneView({
             container: "scenePanel",
             map: map,
-            center: [-116.9772, 33.9295],
+            camera: {
+                position: {
+                    x: -116.9, // lon
+                    y: 33.65,   // lat
+                    z: 25000 // elevation in meters
+                },
+                tilt: 70
+            },
             zoom: 10,
             constraints: {
                 tilt: {
@@ -156,28 +163,30 @@ export default class SceneElement {
         // check if the user is online
         if (this.state.online) {
             this.showLoadingIcon(event);
-            this.view.hitTest(event).then(response => {
-                this.view.popup.close();
-                const result = response.results[0];
-                const query = this.trailsLayer.createQuery();
-                query.geometry = result.mapPoint;
-                query.distance = 400;
-                query.units = "meters";
-                query.spatialRelationship = "intersects";
-                this.trailsLayer
-                    .queryFeatures(query)
-                    .then(results => {
-                        if (results.features.length > 0) {
-                            this.state.setSelectedTrailId(
-                                results.features[0].attributes[config.data.trailAttributes.id]
-                            );
-                        } else {
-                            this.state.setSelectedTrailId(null);
-                        }
-                        this.removeLoadingIcon();
-                    })
-                    .catch(err => console.log(err));
-            });
+            this.view.hitTest(event)
+                .then(response => {
+                    this.view.popup.close();
+                    const result = response.results[0];
+
+                    const query = this.trailsLayer.createQuery();
+                    query.geometry = result.mapPoint;
+                    query.distance = 400;
+                    query.units = "meters";
+                    query.spatialRelationship = "intersects";
+                    this.trailsLayer
+                        .queryFeatures(query)
+                        .then(results => {
+                            if (results.features.length > 0) {
+                                this.state.setSelectedTrailId(
+                                    results.features[0].attributes[config.data.trailAttributes.id]
+                                );
+                            } else {
+                                this.state.setSelectedTrailId(null);
+                            }
+                            this.removeLoadingIcon();
+                        })
+                        .catch(err => console.log(err));
+                });
         }
     }
 
@@ -187,10 +196,10 @@ export default class SceneElement {
             class: "fa fa-spinner fa-spin",
             id: "loadingIcon",
             style: {
-            position: "absolute",
-            fontSize: "40px",
-            top: `${event.screenPoint.y - 15}px`,
-            left: `${event.screenPoint.x - 15}px`
+                position: "absolute",
+                fontSize: "40px",
+                top: `${event.screenPoint.y - 15}px`,
+                left: `${event.screenPoint.x - 15}px`
             }
         }, document.body);
     }

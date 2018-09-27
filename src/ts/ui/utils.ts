@@ -124,13 +124,12 @@ export function createRouteSymbol(node, trails) {
 
     const polylineSymbol = {
         type: "simple-line",  // autocasts as SimpleLineSymbol()
-        color: [255, 221, 0],
-        width: 4
+        color: [33, 237, 111],
+        width: 3
     };
 
     const polylineAtt = {
-        Name: "Keystone Pipeline",
-        Owner: "TransCanada"
+        Name: "Route"
     };
 
     const polylineGraphic = new Graphic({

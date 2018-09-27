@@ -35,7 +35,6 @@ export default class SidePanel {
 
         this.emptyDetails();
         const graphicsLayer = new GraphicsLayer();
-        scene.view.map.add(graphicsLayer);
 
         state.watch("selectedTrailId", (id) => {
             graphicsLayer.removeAll();
@@ -62,6 +61,8 @@ export default class SidePanel {
         if (storage) {
             this.state.trailRoute = storage;
         }
+
+        scene.view.map.add(graphicsLayer);
 
         on(document.querySelector("#routesPanel"), ".removeTrail:click", function(evt) {
             const trailid = evt.target.dataset.trailid;

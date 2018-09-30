@@ -77,7 +77,7 @@ export default class SceneElement {
     // Creates SceneView with widgets.
     private initView() {
         const map = new Map({
-            basemap: "satellite",
+            basemap: "hybrid",
             ground: "world-elevation"
         });
 

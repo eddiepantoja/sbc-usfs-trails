@@ -7,10 +7,12 @@
   right: 0;
   height: 100%;
   background: $offblack;
-  width: 300px;
+  width: 100%;
+  min-width: 300px;
   font-family: 'Cabin', sans-serif;
   color: $white;
   overflow-y: auto;
+  overflow-x: auto; 
 
   .panel {
     display: flex;

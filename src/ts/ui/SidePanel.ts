@@ -97,6 +97,15 @@ export default class SidePanel {
                 );
             }
         });
+
+        // Open about model
+        on(dom.byId("about"), "click", function() {
+            dom.byId("credentialsPanel").style.display = "inline";
+        });
+
+        on(dom.byId("close"), "click", function() {
+            dom.byId("credentialsPanel").style.display = "none";
+        });
     }
 
     // Add trail to Route

@@ -36,22 +36,60 @@
   <link rel='manifest' href='./manifest.json'>
 
   <link rel='stylesheet' href='https://js.arcgis.com/4.7/esri/css/main.css'>
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.10.4/dijit/themes/tundra/tundra.css">
   <link href="https://fonts.googleapis.com/css?family=Cabin|Roboto+Condensed:700" rel="stylesheet">
   <link rel='stylesheet' href='dist/main.css'>
 </head>
 
-<body>
-  <div class="map-wrapper">
-    <div id="scenePanel"></div>
-    <div class="sidePanel">
-      <div id="detailPanel" class="panel">Loading...</div>
-      <div id="routesPanel" class="panel"></div>
+<body class="claro">
+
+  <div data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design:'sidebar', gutters:true, liveSplitters:true"
+    id="borderContainer">
+    <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="splitter:true, region:'leading', layoutPriority:1"
+      style="width: 80%;">
+      <div id="scenePanel"></div>
+    </div>
+    <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="splitter:true, region:'center'">
+      <div class="sidePanel">
+        <div id="detailPanel" class="panel">Loading...</div>
+        <div id="routesPanel" class="panel"></div>
+      </div>
     </div>
   </div>
+
+  <div class='smallMenu'>
+    <button aria-label='Show information about this app' id='about' class='fa fa-info'></button>
+  </div>
+
+  <style>
+    html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow:hidden;
+}
+
+#borderContainer {
+    width: 100%;
+    height: 100%;
+}
+  </style>
+
+  <div id='credentialsPanel'>
+    <span class="esri-icon-close" id="close"></span>
+    <h1>How to Use this App</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+      magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat.</p>
+  </div>
+
+
+
 
   <!--load ArcGIS API for JavaScript-->
   <script>
     var dojoConfig = {
+      parseOnLoad: true,
       has: {
         "esri-promise-compatibility": 1
       },
@@ -62,7 +100,9 @@
   <!--load app-->
   <script>
     require(['./dist/main.bundle.js'], function (main) { });
+    require(["dojo/parser", "dijit/layout/ContentPane", "dijit/layout/BorderContainer"]);
   </script>
+  </div>
 </body>
 
 </html>

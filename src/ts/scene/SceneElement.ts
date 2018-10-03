@@ -17,6 +17,8 @@ import * as all from "dojo/promise/all";
 import * as WebScene from "esri/WebScene";
 import * as Map from "esri/Map";
 import * as SceneView from "esri/views/SceneView";
+import * as Track from "esri/widgets/Track";
+import * as BasemapToggle from "esri/widgets/BasemapToggle";
 import * as FeatureLayer from "esri/layers/FeatureLayer";
 import * as Query from "esri/tasks/support/Query";
 import * as GroupLayer from "esri/layers/GroupLayer";
@@ -77,7 +79,7 @@ export default class SceneElement {
     // Creates SceneView with widgets.
     private initView() {
         const map = new Map({
-            basemap: "satellite",
+            basemap: "topo",
             ground: "world-elevation"
         });
 
@@ -114,13 +116,24 @@ export default class SceneElement {
             ui: {
                 components: ["attribution"]
             },
-            padding: {
-                right: 300
-            },
             popup: {
                 visible: false
             }
         });
+
+        // Basemap Toggle
+        const basemapToggle = new BasemapToggle({
+            view: view,  // The view that provides access to the map's "streets" basemap
+            nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
+        });
+
+        view.ui.add(basemapToggle, "bottom-left");
+
+        // Add tracking
+        const track = new Track({
+            view: view
+        });
+        view.ui.add(track, "top-left");
 
         // Widget provides two buttons for the pan and rotate gestures.
         const navigationToggle = new NavigationToggle({
